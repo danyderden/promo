@@ -1,5 +1,4 @@
 import asyncio
-import os
 from logging.config import fileConfig
 
 from sqlalchemy import pool
@@ -32,8 +31,6 @@ target_metadata = PromoCode.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-
-url = os.getenv('DB_URL', config.get_main_option("sqlalchemy.url"))
 
 
 def run_migrations_offline() -> None:
