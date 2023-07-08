@@ -19,7 +19,7 @@ async def _insert_promo_code_list(promo_list: PromoCodeInsert,
 async def _get_available_promo_code(session: AsyncSession):
     available_promo_code = select(PromoCode).where(PromoCode.status == True)
     result = await session.execute(available_promo_code)
-    return result.scalars().one()
+    return result.scalars().first()
 
 
 async def _mark_promo_code_as_give_out(session: AsyncSession,

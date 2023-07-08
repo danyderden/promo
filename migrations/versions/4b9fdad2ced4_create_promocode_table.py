@@ -1,7 +1,7 @@
 """create promocode table
 
 Revision ID: 4b9fdad2ced4
-Revises: 
+Revises:
 Create Date: 2023-07-07 17:41:20.783423
 
 """
