@@ -8,4 +8,4 @@ RUN python3 -m pip install --user --upgrade pip && \
 
 RUN alembic upgrade head
 
-CMD ["python", "main.py"]
+CMD gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000
