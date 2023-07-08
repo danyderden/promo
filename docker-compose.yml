@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  promo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: promo
+    env_file:
+      - .env
+    depends_on:
+    - db
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+  db:
+    image: postgres
+    restart: always
+    container_name: db
+    env_file:
+      - .env
+    volumes:
+      - .:/db
+    ports:
+      - "5432:5432"

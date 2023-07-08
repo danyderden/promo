@@ -3,9 +3,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, \
     create_async_engine
 from typing import AsyncGenerator
 
-from config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
+from config import DB_URL
 
-DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+# DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE_URL = DB_URL
 
 
 class Base(DeclarativeBase):
