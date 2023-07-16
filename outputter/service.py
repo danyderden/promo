@@ -11,9 +11,8 @@ from outputter.schemas import PromoCodeInsert, PromoCodeGiveOut
 async def _insert_promo_code_list(promo_list: PromoCodeInsert,
                                   session: AsyncSession):
     for promo in promo_list.promo_list:
-        session.add(PromoCode(promocode=promo, id=uuid.uuid4()))
-        await session.commit()
-    await session.flush()
+        session.add(PromoCode(id=uuid.uuid4(), promocode=promo))
+    await session.commit()
 
 
 async def _get_available_promo_code(session: AsyncSession):
@@ -27,9 +26,13 @@ async def _mark_promo_code_as_give_out(session: AsyncSession,
                                        action_info: PromoCodeGiveOut
                                        ):
     query = update(PromoCode).where(PromoCode.id == promo_code.id).values(
-        status=False, reason=action_info.reason, user=action_info.user,
-        issued_at=datetime.datetime.utcnow(), ticket_id=action_info.ticket_id)
+        status=False,
+        reason=action_info.reason,
+        user=action_info.user,
+        issued_at=datetime.datetime.utcnow(),
+        ticket_id=action_info.ticket_id)
     await session.execute(query)
+
     await session.commit()
 
 

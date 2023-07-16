@@ -1,0 +1,33 @@
+[tool.pytest.ini_options]
+pythonpath = [
+    '.'
+]
+asyncio_mode="auto"
+
+[tool.poetry]
+name = "promo"
+version = "0.1.0"
+description = ""
+authors = ["danyderden <danyderden@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["all"], version = "^0.100.0"}
+uvicorn = "^0.23.0"
+python-dotenv = "^1.0.0"
+sqlalchemy = "^2.0.19"
+asyncpg = "^0.28.0"
+psycopg2-binary = "^2.9.6"
+alembic = "^1.11.1"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
+httpx = "^0.24.1"
+pytest-asyncio = "^0.21.1"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

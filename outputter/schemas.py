@@ -1,6 +1,5 @@
 import enum
 
-
 from pydantic import BaseModel
 
 
@@ -9,7 +8,7 @@ class PromoCodeShowAvailable(BaseModel):
 
 
 class PromoCodeInsert(BaseModel):
-    promo_list: list[str, str]
+    promo_list: list[str]
 
 
 class ReasonType(str, enum.Enum):

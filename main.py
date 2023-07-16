@@ -1,4 +1,3 @@
-import uvicorn
 from fastapi import FastAPI
 
 from outputter.handlers import promo_code_router
