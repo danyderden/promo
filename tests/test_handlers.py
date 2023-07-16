@@ -8,20 +8,18 @@ async def test_insert_promo_code_list_handler_success(
         'promo2',
         'promo3']
     })
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.json()['status'] == 'success'
-    assert response.json()['data'] == 'Promo codes have been added'
-    assert response.json()['detail'] == {
-        'promo_list': ['promo1', 'promo2', 'promo3']}
+    assert response.json()['data']['promo_list'] == ['promo1', 'promo2', 'promo3']
+    assert response.json()['detail'] == 'Promo codes have been added'
 
 
 async def test_promo_code_give_out_handler(async_client: AsyncClient):
-    new_promo = await async_client.post(url='promocode', json={'promo_list': [
+    await async_client.post(url='promocode', json={'promo_list': [
         'promo1',
         'promo2',
         'promo3']
     })
-    assert new_promo.status_code == 200
     response = await async_client.patch('promocode', json={
         'user': 'some_user',
         'reason': 'bug',
@@ -30,7 +28,8 @@ async def test_promo_code_give_out_handler(async_client: AsyncClient):
     print(response.json())
     assert response.status_code == 200
     assert response.json()['status'] == 'success'
-    assert response.json()['promo code'] == 'promo1'
+    assert response.json()['data'] == 'promo1'
+    assert response.json()['detail'] is None
 
 
 async def test_promo_code_give_out_no_promo_handler(async_client: AsyncClient):

@@ -1,5 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+
 
 from database import get_async_session
 from outputter.schemas import PromoCodeInsert, PromoCodeGiveOut
@@ -14,11 +17,11 @@ async def insert_promo_code_list(promo_list: PromoCodeInsert,
                                      get_async_session)):
     try:
         await _insert_promo_code_list(promo_list, session)
-        return {
+        return JSONResponse(status_code=201, content={
             'status': 'success',
-            'data': 'Promo codes have been added',
-            'detail': promo_list
-        }
+            'data': jsonable_encoder(promo_list),
+            'detail': 'Promo codes have been added'
+        })
     except HTTPException as error:
         return {
             'status': 'Not success',
@@ -34,10 +37,11 @@ async def promo_code_give_out(action_info: PromoCodeGiveOut,
     try:
         promo_code_to_give_out = await _promo_code_give_out(session,
                                                             action_info)
-        return {
+        return JSONResponse(status_code=200, content={
             'status': 'success',
-            'promo code': promo_code_to_give_out,
-        }
+            'data': jsonable_encoder(promo_code_to_give_out),
+            'detail': None
+        })
     except AttributeError:
         return HTTPException(status_code=404, detail={
             'status': 'No more',

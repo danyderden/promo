@@ -11,6 +11,8 @@ class PromoCodeInsert(BaseModel):
     promo_list: list[str]
 
 
+
+
 class ReasonType(str, enum.Enum):
     bug = 'bug'
     event = 'event'

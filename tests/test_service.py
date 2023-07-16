@@ -1,3 +1,5 @@
+from fastapi.encoders import jsonable_encoder
+
 from httpx import AsyncClient
 
 from outputter.handlers import insert_promo_code_list, promo_code_give_out
@@ -10,10 +12,7 @@ async def test_insert_promo_code_list():
         promo_list = PromoCodeInsert(promo_list=['promo1', 'promo2'])
         response = await insert_promo_code_list(promo_list=promo_list,
                                                 session=session)
-        assert response['status'] == 'success'
-        assert response['data'] == 'Promo codes have been added'
-        assert response[
-                   'detail'] == promo_list
+        assert response.status_code == 201
 
 
 async def test_promo_code_give_out(async_client: AsyncClient):
@@ -24,5 +23,4 @@ async def test_promo_code_give_out(async_client: AsyncClient):
                                        reason='bug')
         response = await promo_code_give_out(action_info=action_info,
                                              session=session)
-        assert response['status'] == 'success'
-        assert response['promo code'] == 'promo1'
+        assert response.status_code == 200
